@@ -1,5 +1,8 @@
 <template>
     <v-container>
+        <div class="text-xs-right">
+            <v-btn color="success" @click="$router.push('/result')">Розрахувати</v-btn>
+        </div>
         <v-form v-model="validity" ref="form">
             <v-layout row px-2 mb-3>
             <v-flex mx-2>

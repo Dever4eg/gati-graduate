@@ -9,8 +9,11 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'landing-page',
       component: require('@/components/Start').default
+    },
+    {
+      path: '/result',
+      component: require('@/components/Result').default
     },
     {
       path: '*',
