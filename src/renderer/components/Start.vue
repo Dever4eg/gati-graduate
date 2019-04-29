@@ -42,7 +42,7 @@
                             <v-chip class="mr-4">{{item.code}}</v-chip>
                             <v-list-tile-content>{{item.title}}</v-list-tile-content>
                             <v-chip color="green" text-color="white" class="font-weight-bold">{{item.sum}} грн</v-chip>
-                            <v-btn icon flat color="red" @click="removeItem(item)">
+                            <v-btn icon flat color="red" @click="removeAccount(item)">
                                 <v-icon>delete</v-icon>
                             </v-btn>
                         </v-list-tile>
@@ -57,7 +57,7 @@
                             <v-chip class="mr-4">{{item.code}}</v-chip>
                             <v-list-tile-content>{{item.title}}</v-list-tile-content>
                             <v-chip color="green" text-color="white" class="font-weight-bold">{{item.sum}} грн</v-chip>
-                            <v-btn icon flat color="red" @click="removeActive(item)">
+                            <v-btn icon flat color="red" @click="removeAccount(item)">
                                 <v-icon>delete</v-icon>
                             </v-btn>
                         </v-list-tile>
@@ -69,6 +69,8 @@
 </template>
 
 <script>
+    import { mapState, mapActions, mapGetters } from 'vuex'
+
     export default {
         data: () => ({
             rules: {
@@ -81,26 +83,28 @@
                 sum: null,
                 title: null,
                 type: 'актив',
-            },
-            active: [],
-            passive: []
+            }
         }),
+        computed: {
+            ...mapState({
+                accounts: state => state.accounts.all,
+            }),
+            ...mapGetters(['active', 'passive'])
+        },
         methods: {
-            removeItem: function (event) {
-                this.active = this.active.filter(item => item !== event)
-                this.passive = this.passive.filter(item => item !== event)
-            },
+            ...mapActions(['removeAccount', 'addAccount']),
             newItem() {
                 this.$refs.form.validate()
                 if (this.validity === false) return
+
                 const item = {
                     code: this.form.code,
                     sum: this.form.sum,
-                    title: this.form.title
+                    title: this.form.title,
+                    type: this.form.type
                 }
 
-                this.form.type === 'актив' && this.active.push(item)
-                this.form.type === 'пасив' && this.passive.push(item)
+                this.addAccount(item)
             }
         }
     }
