@@ -11,6 +11,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { VueLoaderPlugin } = require('vue-loader')
+const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin')
 
 /**
  * List of node_modules to include in webpack bundle
@@ -128,7 +129,8 @@ let rendererConfig = {
         : false
     }),
     new webpack.HotModuleReplacementPlugin(),
-    new webpack.NoEmitOnErrorsPlugin()
+    new webpack.NoEmitOnErrorsPlugin(),
+    new VuetifyLoaderPlugin()
   ],
   output: {
     filename: '[name].js',
